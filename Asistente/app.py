@@ -25,7 +25,7 @@ while opcion != 0:
 
         if opcion == 1:
 
-                catalogo, _ = asistente.mostrar_catalogo()
+                _, catalogo  = asistente.mostrar_catalogo()
                 print(catalogo)
 
 
@@ -103,7 +103,8 @@ while opcion != 0:
                 else:
                         print("Ingrese una opción válida")
 
-                cliente.agregar_propiedad(tipo, ubicacion, dimension, valor, habitaciones, lavados, url)
+                string, bool = cliente.agregar_propiedad(tipo, ubicacion, dimension, valor, habitaciones, lavados, url)
+                print(string)
 
         if opcion == 4:
                 id = int(input("Ingrese el ID"))

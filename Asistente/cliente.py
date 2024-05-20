@@ -22,29 +22,75 @@ class Cliente:
         return (f"{casa}\n"
                 f"{mensaje}")
 
-    def agregar_propiedad(self, tipo: str, ubicacion: str, dimension: str, valor: str, habitaciones: str, lavados: str, url: str = None ):
-        id = len(self.propiedades_cliente)
-        obj_propiedad = Propiedad(id, tipo, ubicacion, dimension, valor, habitaciones, lavados, url)
-        self.propiedades_cliente.append(obj_propiedad)
+    def agregar_propiedad(self, tipo: str, ubicacion: str, dimension: str, valor: str, lavados: str = None, habitaciones: str = None, url: str = None) -> tuple[str, bool]:
 
-    def poner_venta(self, id: int):
-        _, propiedades_list = self.asistente.mostrar_catalogo()
-        self.propiedades_cliente[id].id = len(propiedades_list)
-        propiedades_list.append(self.propiedades_cliente[id])
+        try:
+            if not all(param.strip() for param in (tipo, ubicacion, dimension, valor, habitaciones, lavados)):
+                raise ValueError("Los parámetros no pueden estar vacíos.")
+
+            id = len(self.propiedades_cliente)
+            obj_propiedad = Propiedad(id, tipo, ubicacion, dimension, valor, habitaciones, lavados, url)
+            self.propiedades_cliente.append(obj_propiedad)
+            return "Propiedad agregada con éxito.", True
+        except Exception as e:
+            return f"Error al agregar la propiedad: {e}", False
+
+    def poner_venta(self, id_str: str) -> str:
+        try:
+            if not id_str.strip():
+                raise ValueError("Debe ingresar el ID de una de sus propiedades")
+
+            id = int(id_str)
+
+            for  propiedad in self.propiedades_cliente:
+                if propiedad.id == id:
+                    _, propiedades_list = self.asistente.mostrar_catalogo()
+                    propiedad.id = len(propiedades_list)
+                    propiedades_list.append(propiedad)
+                    del self.propiedades_cliente[id]
 
 
+                    return "Propiedad agregada con éxito"
 
+            raise ValueError("El ID dado no existe en las propiedades del cliente.")
 
-    """def editar_venta(self, id: int, nueva_info: dict ):
-        for propiedad in properties:
-            if propiedad['id'] == id:
-                for key, value in nueva_info.items():
-                    if key in propiedad:
-                        propiedad[key] = value
-                return True
-        return False"""
+        except ValueError as ve:
+            return str(ve)
+        except Exception as e:
+            return f"Error inesperado: {e}"
 
+    def editar_propiedad(self, id_str: str, tipo: str = None, ubicacion: str = None, dimension: str = None, valor: str = None, lavados: str = None, habitaciones: str = None, url: str = None) -> str:
+        try:
+            if not id_str.strip():
+                raise ValueError("Debe ingresar el ID de la propiedad que desea editar.")
 
+            id = int(id_str)
+
+            for propiedad in self.propiedades_cliente:
+                if propiedad.id == id:
+                    if tipo is not None and tipo.strip() != "":
+                        propiedad.tipo = tipo
+                    if ubicacion is not None and ubicacion.strip() != "":
+                        propiedad.ubicacion = ubicacion
+                    if dimension is not None and dimension.strip() != "":
+                        propiedad.dimension = dimension
+                    if valor is not None and valor.strip() != "":
+                        propiedad.valor = valor
+                    if lavados is not None and lavados.strip() != "":
+                        propiedad.lavados = lavados
+                    if habitaciones is not None and habitaciones.strip() !="":
+                        propiedad.habitaciones = habitaciones
+                    if url is not None and url.strip() != "" :
+                        propiedad.url = url
+
+                    return "Propiedad editada con éxito."
+
+            raise ValueError("El ID dado no existe en las propiedades del cliente.")
+
+        except ValueError as ve:
+            return str(ve)
+        except Exception as e:
+            return f"Error inesperado: {e}"
 
     def mostrar_propiedades_cliente(self) -> tuple[str, list[Propiedad]]:
         propiedades_cliente_str = ""

@@ -4,14 +4,16 @@ import re
 import time
 from unidecode import unidecode
 
-scraper = PropertyScraper()
+
 
 class Asistente:
     def __init__(self, property_scraper: PropertyScraper):
         self.property_scraper: PropertyScraper = property_scraper
 
-    def mostrar_catalogo(self) -> tuple[str, list[Propiedad]] :
+    def mostrar_catalogo(self) -> tuple[str, list[Propiedad]]:
         catalogo_str = ""
+        if not self.property_scraper.propiedades_list:
+            self.property_scraper.scrape_properties()
         for idx, propiedad in enumerate(self.property_scraper.propiedades_list, start=1):
             catalogo_str += f"Propiedad {propiedad.id}:\n"
             catalogo_str += f"Tipo: {propiedad.tipo if hasattr(propiedad, 'tipo') else 'No disponible'}\n"
@@ -23,9 +25,13 @@ class Asistente:
             catalogo_str += f"URL: {propiedad.url if hasattr(propiedad, 'url') else 'No disponible'}\n\n"
         return catalogo_str, self.property_scraper.propiedades_list
 
-    def buscar(self, tipo: str = None, ubicacion: str = None, valor_max: int = None, habitaciones_minimas: int = None, lavados_minimos: int = None, dimension_minima: int = None) -> list [Propiedad]:
+    def buscar(self, tipo: str = None, ubicacion: str = None, valor_max: int = None, habitaciones_minimas: int = None, lavados_minimos: int = None, dimension_minima: int = None) -> list[Propiedad]:
         propiedades_encontradas = []
-        for propiedad in self.property_scraper.propiedades_list:
+        if not self.property_scraper.propiedades_list:  # Verificar si la lista está vacía antes de hacer scraping
+            propiedades = self.property_scraper.scrape_properties()
+        else:
+            propiedades = self.property_scraper.propiedades_list
+        for propiedad in propiedades:
             valor_int = int(propiedad.valor.replace('$', '').replace('.', ''))
             habitaciones_extraer = re.search(r"\d+", propiedad.habitaciones)
             habitaciones_int = int(habitaciones_extraer.group()) if habitaciones_extraer else 0
