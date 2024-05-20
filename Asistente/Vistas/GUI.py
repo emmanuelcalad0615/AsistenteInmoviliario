@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'agenteInmobiliariozZSMuC.ui'
+## Form generated from reading UI file 'agenteInmobiliariomxHFwH.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.3
 ##
@@ -16,15 +16,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QGridLayout,
-    QHBoxLayout, QHeaderView, QLabel, QLineEdit,
-    QPushButton, QSizePolicy, QSpacerItem, QSplitter,
-    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
+                               QHBoxLayout, QHeaderView, QLabel, QLineEdit,
+                               QPushButton, QSizePolicy, QSpacerItem, QSplitter,
+                               QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QAbstractItemView)
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(1042, 524)
+        Dialog.resize(912, 524)
         Dialog.setStyleSheet(u"background-color: rgb(0, 0, 0);")
         self.verticalLayout_6 = QVBoxLayout(Dialog)
         self.verticalLayout_6.setSpacing(0)
@@ -150,7 +150,8 @@ class Ui_Dialog(object):
 "}\n"
 "QPushButton:hover{\n"
 "background-color:black;\n"
-"}")
+"}\n"
+"QPushButton::icon { margin-left: 20px; }")
         self.frame_menu.setFrameShape(QFrame.StyledPanel)
         self.frame_menu.setFrameShadow(QFrame.Raised)
         self.verticalLayout_5 = QVBoxLayout(self.frame_menu)
@@ -158,7 +159,8 @@ class Ui_Dialog(object):
         self.verticalLayout_5.setContentsMargins(9, 9, 9, 9)
         self.btn_mostrarCatalogo = QPushButton(self.frame_menu)
         self.btn_mostrarCatalogo.setObjectName(u"btn_mostrarCatalogo")
-        self.btn_mostrarCatalogo.setLayoutDirection(Qt.RightToLeft)
+        self.btn_mostrarCatalogo.setLayoutDirection(Qt.LeftToRight)
+        self.btn_mostrarCatalogo.setStyleSheet(u"")
         icon5 = QIcon()
         icon5.addFile(u"./img/documento.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_mostrarCatalogo.setIcon(icon5)
@@ -168,21 +170,24 @@ class Ui_Dialog(object):
 
         self.btn_buscar = QPushButton(self.frame_menu)
         self.btn_buscar.setObjectName(u"btn_buscar")
-        self.btn_buscar.setLayoutDirection(Qt.RightToLeft)
-        self.btn_buscar.setStyleSheet(u"QPushButtonhover{\n"
+        self.btn_buscar.setToolTipDuration(2)
+        self.btn_buscar.setLayoutDirection(Qt.LeftToRight)
+        self.btn_buscar.setStyleSheet(u"QPushButton:hover{\n"
 "\n"
 "background-color: black;\n"
-"}")
+"}\n"
+"")
         icon6 = QIcon()
         icon6.addFile(u"./img/buscar.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_buscar.setIcon(icon6)
         self.btn_buscar.setIconSize(QSize(32, 32))
+        self.btn_buscar.setAutoExclusive(False)
 
         self.verticalLayout_5.addWidget(self.btn_buscar)
 
         self.btn_agregar = QPushButton(self.frame_menu)
         self.btn_agregar.setObjectName(u"btn_agregar")
-        self.btn_agregar.setLayoutDirection(Qt.RightToLeft)
+        self.btn_agregar.setLayoutDirection(Qt.LeftToRight)
         icon7 = QIcon()
         icon7.addFile(u"./img/boton-agregar.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_agregar.setIcon(icon7)
@@ -192,7 +197,7 @@ class Ui_Dialog(object):
 
         self.btn_vender = QPushButton(self.frame_menu)
         self.btn_vender.setObjectName(u"btn_vender")
-        self.btn_vender.setLayoutDirection(Qt.RightToLeft)
+        self.btn_vender.setLayoutDirection(Qt.LeftToRight)
         icon8 = QIcon()
         icon8.addFile(u"./img/precio.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_vender.setIcon(icon8)
@@ -202,7 +207,7 @@ class Ui_Dialog(object):
 
         self.btn_visualizar = QPushButton(self.frame_menu)
         self.btn_visualizar.setObjectName(u"btn_visualizar")
-        self.btn_visualizar.setLayoutDirection(Qt.RightToLeft)
+        self.btn_visualizar.setLayoutDirection(Qt.LeftToRight)
         icon9 = QIcon()
         icon9.addFile(u"./img/vision (1).png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_visualizar.setIcon(icon9)
@@ -212,7 +217,12 @@ class Ui_Dialog(object):
 
         self.btn_editar = QPushButton(self.frame_menu)
         self.btn_editar.setObjectName(u"btn_editar")
-        self.btn_editar.setLayoutDirection(Qt.RightToLeft)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_editar.sizePolicy().hasHeightForWidth())
+        self.btn_editar.setSizePolicy(sizePolicy)
+        self.btn_editar.setLayoutDirection(Qt.LeftToRight)
         icon10 = QIcon()
         icon10.addFile(u"./img/editar.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_editar.setIcon(icon10)
@@ -306,6 +316,8 @@ class Ui_Dialog(object):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.label_2 = QLabel(self.widget)
         self.label_2.setObjectName(u"label_2")
+        self.label_2.setAcceptDrops(False)
+        self.label_2.setToolTipDuration(1)
 
         self.verticalLayout_3.addWidget(self.label_2)
 
@@ -463,7 +475,8 @@ class Ui_Dialog(object):
         __qtablewidgetitem7 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(7, __qtablewidgetitem7)
         self.tableWidget.setObjectName(u"tableWidget")
-
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 1)
 
 
@@ -500,12 +513,21 @@ class Ui_Dialog(object):
         self.btn_maximizar.setText("")
         self.btn_cerrar.setText("")
         self.btn_mostrarCatalogo.setText(QCoreApplication.translate("Dialog", u"CATALOGO ", None))
+#if QT_CONFIG(tooltip)
+        self.btn_buscar.setToolTip("")
+#endif // QT_CONFIG(tooltip)
         self.btn_buscar.setText(QCoreApplication.translate("Dialog", u"BUSCAR", None))
         self.btn_agregar.setText(QCoreApplication.translate("Dialog", u"AGREGAR", None))
         self.btn_vender.setText(QCoreApplication.translate("Dialog", u"VENDER", None))
         self.btn_visualizar.setText(QCoreApplication.translate("Dialog", u"VER", None))
         self.btn_editar.setText(QCoreApplication.translate("Dialog", u"EDITAR", None))
         self.label_titulo.setText(QCoreApplication.translate("Dialog", u"PROPIEDADES", None))
+#if QT_CONFIG(tooltip)
+        self.label_2.setToolTip(QCoreApplication.translate("Dialog", u"<html><head/><body><p>este valor es obligatorio para su llenado</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(whatsthis)
+        self.label_2.setWhatsThis(QCoreApplication.translate("Dialog", u"<html><head/><body><p>que es esto</p></body></html>", None))
+#endif // QT_CONFIG(whatsthis)
         self.label_2.setText(QCoreApplication.translate("Dialog", u"ID", None))
         self.label_3.setText(QCoreApplication.translate("Dialog", u"TIPO", None))
         self.label_4.setText(QCoreApplication.translate("Dialog", u"UBICACI\u00d3N", None))

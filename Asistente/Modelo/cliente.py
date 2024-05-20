@@ -1,5 +1,5 @@
-from Asistente.asistente import Asistente
-from Asistente.propiedad import Propiedad
+from Asistente.Modelo.asistente import Asistente
+from Asistente.Modelo.propiedad import Propiedad
 
 
 class Cliente:

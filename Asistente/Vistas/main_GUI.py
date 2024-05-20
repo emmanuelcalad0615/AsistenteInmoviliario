@@ -2,10 +2,10 @@ from PySide6 import QtCore
 from PySide6.QtCore import QPropertyAnimation, QUrl
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QApplication, QDialog, QTableWidgetItem
-from Asistente.GUI import Ui_Dialog  # Assuming your UI code is in a separate file named ui_file.py
-from Asistente.asistente import Asistente
-from Asistente.cliente import Cliente
-from Asistente.webScraping import PropertyScraper
+from Asistente.Vistas.GUI import Ui_Dialog
+from Asistente.Modelo.asistente import Asistente
+from Asistente.Modelo.cliente import Cliente
+from Asistente.Modelo.webScraping import PropertyScraper
 
 
 class MainWindow(QDialog):
@@ -19,6 +19,8 @@ class MainWindow(QDialog):
         self.ui.lbl_msj.setText(e)
         self.asistente: Asistente = Asistente(self.scraper)
         self.cliente: Cliente = Cliente(nombre= "Usuario", asistente= self.asistente)
+
+
     def build_gui(self):
         self.ui.btn_restaurar.hide()
         self.ui.btn_cerrar.clicked.connect(lambda: self.close())
@@ -92,6 +94,8 @@ class MainWindow(QDialog):
 
 
     def openUrl(self, row, column):
+        if column != 7:
+            return
         url_text = self.ui.tableWidget.item(row, 7).text()
         url = QUrl(url_text)
         if url.isValid():
@@ -132,6 +136,7 @@ class MainWindow(QDialog):
         self.control_btn_limpiar()
 
 
+
     def buscar(self):
         self.ui.tableWidget.clearContents()
         self.ui.tableWidget.setRowCount(0)
@@ -144,11 +149,16 @@ class MainWindow(QDialog):
             'lavados': self.ui.lineEdit_lavados.text().upper() if self.ui.lineEdit_lavados.text() else None,
             'dimension': self.ui.lineEdit_dim.text().upper() if self.ui.lineEdit_dim.text() else None,
             'url': self.ui.lineEdit_url.text().upper() if self.ui.lineEdit_url.text() else None
-      }
+        }
 
-
-        propiedades_encontradas = self.asistente.buscar(dict['tipo'], dict['ubicacion'], dict['valor'], dict['habitaciones'],
-                                                   dict['lavados'], dict['dimension'])
+        propiedades_encontradas = self.asistente.buscar(
+            dict['tipo'],
+            dict['ubicacion'],
+            dict['valor'],
+            dict['habitaciones'],
+            dict['lavados'],
+            dict['dimension']
+        )
         i = len(propiedades_encontradas)
         self.ui.tableWidget.setRowCount(i)
         for row, propiedad in enumerate(propiedades_encontradas):
@@ -213,12 +223,3 @@ class MainWindow(QDialog):
         msj = self.cliente.editar_propiedad(id_str, tipo, ubicacion, valor, lavados, habitaciones, dimension, url)
         self.ui.lbl_msj.setText(msj)
         self.control_btn_limpiar()
-
-
-
-if __name__ == "__main__":
-    import sys
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())

@@ -1,7 +1,7 @@
 import requests
 from bs4 import  BeautifulSoup
 
-from Asistente.propiedad import Propiedad
+from Asistente.Modelo.propiedad import Propiedad
 
 
 class PropertyScraper:

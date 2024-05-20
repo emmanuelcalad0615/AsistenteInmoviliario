@@ -1,5 +1,5 @@
-from Asistente.propiedad import Propiedad
-from webScraping import PropertyScraper
+from Asistente.Modelo.propiedad import Propiedad
+from Asistente.Modelo.webScraping import PropertyScraper
 import re
 import time
 from unidecode import unidecode
