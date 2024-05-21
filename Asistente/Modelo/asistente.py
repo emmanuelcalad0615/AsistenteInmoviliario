@@ -64,7 +64,7 @@ class Asistente:
 
         return propiedades_encontradas
 
-    def mostrar_menu(self):
+    """def mostrar_menu(self):
         menu = (" __  __              __  \n"
                 "|  \/  |            /_/  \n"
                 "| \  / | ___ _ __  _   _ \n"
@@ -79,7 +79,7 @@ class Asistente:
         print("3. Agregar propiedad.\n")
         print("4. Poner propiedad a la venta\n")
         print("5. Mostrar mis propiedades\n")
-        print("0. Salir.\n")
+        print("0. Salir.\n")"""
 
 
 
