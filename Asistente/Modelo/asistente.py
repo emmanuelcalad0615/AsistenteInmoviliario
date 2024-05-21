@@ -12,22 +12,36 @@ class Asistente:
 
     def mostrar_catalogo(self) -> tuple[str, list[Propiedad]]:
         catalogo_str = ""
-        if not self.property_scraper.propiedades_list:
-            self.property_scraper.scrape_properties()
-        for idx, propiedad in enumerate(self.property_scraper.propiedades_list, start=1):
-            catalogo_str += f"Propiedad {propiedad.id}:\n"
-            catalogo_str += f"Tipo: {propiedad.tipo if hasattr(propiedad, 'tipo') else 'No disponible'}\n"
-            catalogo_str += f"Ubicación: {propiedad.ubicacion if hasattr(propiedad, 'ubicacion') else 'No disponible'}\n"
-            catalogo_str += f"Valor: {propiedad.valor if hasattr(propiedad, 'valor') else 'No disponible'}\n"
-            catalogo_str += f"Habitaciones: {propiedad.habitaciones if hasattr(propiedad, 'habitaciones') else 'No disponible'}\n"
-            catalogo_str += f"Lavados: {propiedad.lavados if hasattr(propiedad, 'lavados') else 'No disponible'}\n"
-            catalogo_str += f"Dimensión: {propiedad.dimension if hasattr(propiedad, 'dimension') else 'No disponible'}\n"
-            catalogo_str += f"URL: {propiedad.url if hasattr(propiedad, 'url') else 'No disponible'}\n\n"
-        return catalogo_str, self.property_scraper.propiedades_list
+        error_message = ""
+        try:
+            if not self.property_scraper.propiedades_list:
+                error_message, properties_list = self.property_scraper.scrape_properties()
+                if error_message:
+                    return error_message, []
+                self.property_scraper.propiedades_list = properties_list
+        except Exception as e:
+            error_message = f"Error al obtener el catálogo: {str(e)}"
+            return error_message, []
+
+        try:
+            for idx, propiedad in enumerate(self.property_scraper.propiedades_list, start=1):
+                catalogo_str += f"Propiedad {propiedad.id}:\n"
+                catalogo_str += f"Tipo: {propiedad.tipo if hasattr(propiedad, 'tipo') else 'No disponible'}\n"
+                catalogo_str += f"Ubicación: {propiedad.ubicacion if hasattr(propiedad, 'ubicacion') else 'No disponible'}\n"
+                catalogo_str += f"Valor: {propiedad.valor if hasattr(propiedad, 'valor') else 'No disponible'}\n"
+                catalogo_str += f"Habitaciones: {propiedad.habitaciones if hasattr(propiedad, 'habitaciones') else 'No disponible'}\n"
+                catalogo_str += f"Lavados: {propiedad.lavados if hasattr(propiedad, 'lavados') else 'No disponible'}\n"
+                catalogo_str += f"Dimensión: {propiedad.dimension if hasattr(propiedad, 'dimension') else 'No disponible'}\n"
+                catalogo_str += f"URL: {propiedad.url if hasattr(propiedad, 'url') else 'No disponible'}\n\n"
+        except Exception as e:
+            error_message = f"Error al construir el catálogo: {str(e)}"
+            return error_message, []
+
+        return error_message, self.property_scraper.propiedades_list
 
     def buscar(self, tipo: str = None, ubicacion: str = None, valor_max: int = None, habitaciones_minimas: int = None, lavados_minimos: int = None, dimension_minima: int = None) -> list[Propiedad]:
         propiedades_encontradas = []
-        if not self.property_scraper.propiedades_list:  # Verificar si la lista está vacía antes de hacer scraping
+        if not self.property_scraper.propiedades_list:
             propiedades = self.property_scraper.scrape_properties()
         else:
             propiedades = self.property_scraper.propiedades_list

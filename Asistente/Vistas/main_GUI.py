@@ -36,6 +36,8 @@ class MainWindow(QDialog):
         self.ui.btn_visualizar.clicked.connect(self.visualizar)
         self.ui.btn_vender.clicked.connect(self.poner_venta)
         self.ui.btn_editar.clicked.connect(self.editar)
+        self.ui.btn_eliminar.clicked.connect(self.eliminar)
+
     def control_btn_minimizar(self):
         self.showMinimized()
     def control_btn_restaurar(self):
@@ -78,7 +80,7 @@ class MainWindow(QDialog):
         self.ui.tableWidget.clearContents()
         self.ui.tableWidget.setRowCount(0)
 
-        _, lista = self.asistente.mostrar_catalogo()
+        error, lista = self.asistente.mostrar_catalogo()
         i = len(lista)
         self.ui.tableWidget.setRowCount(i)
 
@@ -91,6 +93,7 @@ class MainWindow(QDialog):
             self.ui.tableWidget.setItem(row, 5, QTableWidgetItem(str(propiedad.habitaciones)))
             self.ui.tableWidget.setItem(row, 6, QTableWidgetItem(str(propiedad.lavados)))
             self.ui.tableWidget.setItem(row, 7, QTableWidgetItem(str(propiedad.url)))
+
 
 
     def openUrl(self, row, column):
@@ -119,7 +122,7 @@ class MainWindow(QDialog):
 
         string, booleano=self.cliente.agregar_propiedad(dict['tipo'],dict['ubicacion'],dict['dimension'], dict['valor'], dict['lavados'], dict['habitaciones'], dict['url'] )
         if booleano == True:
-            row_index = self.ui.tableWidget.rowCount()  # Obtener el índice de la próxima fila disponible
+            row_index = self.ui.tableWidget.rowCount()
             self.ui.tableWidget.insertRow(row_index)
 
             self.ui.tableWidget.setItem(0, 0, QTableWidgetItem(str(id)))
@@ -193,7 +196,7 @@ class MainWindow(QDialog):
         self.ui.lbl_msj.setText(msj)
         self.control_btn_limpiar()
     def visualizar(self):
-        _, lista = self.cliente.mostrar_propiedades_cliente()
+        e, lista = self.cliente.mostrar_propiedades_cliente()
         i = len(lista)
         self.ui.tableWidget.setRowCount(i)
 
@@ -206,6 +209,7 @@ class MainWindow(QDialog):
             self.ui.tableWidget.setItem(row, 5, QTableWidgetItem(str(propiedad.habitaciones)))
             self.ui.tableWidget.setItem(row, 6, QTableWidgetItem(str(propiedad.lavados)))
             self.ui.tableWidget.setItem(row, 7, QTableWidgetItem(str(propiedad.url)))
+        self.ui.lbl_msj.setText(e)
 
     def editar(self):
         tipo = self.ui.lineEdit_tipo.text().upper()
@@ -215,11 +219,18 @@ class MainWindow(QDialog):
         lavados = self.ui.lineEdit_lavados.text().upper()
         dimension = self.ui.lineEdit_dim.text().upper()
         url = self.ui.lineEdit_url.text().upper()
-
-
         self.ui.tableWidget.clearContents()
         self.ui.tableWidget.setRowCount(0)
         id_str = self.ui.lineEdit_id.text().upper()
         msj = self.cliente.editar_propiedad(id_str, tipo, ubicacion, valor, lavados, habitaciones, dimension, url)
         self.ui.lbl_msj.setText(msj)
         self.control_btn_limpiar()
+
+    def eliminar(self):
+        self.ui.tableWidget.clearContents()
+        self.ui.tableWidget.setRowCount(0)
+        id_str = self.ui.lineEdit_id.text().upper()
+        msj = self.cliente.eliminar_propiedad(id_str)
+        self.ui.lbl_msj.setText(msj)
+        self.control_btn_limpiar()
+

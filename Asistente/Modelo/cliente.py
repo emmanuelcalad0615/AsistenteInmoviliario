@@ -9,7 +9,7 @@ class Cliente:
         self.asistente: Asistente = asistente
         self.propiedades_cliente: list[Propiedad] = []
 
-    def saludar(self) -> str:
+    """def saludar(self) -> str:
         casa = (
             "░░░░░░░░░░░░░░░░▄▓▄░░░\n"
             "░░░░▄█▄░░░░░░░░▄▓▓▓▄░░\n"
@@ -20,7 +20,7 @@ class Cliente:
         mensaje = f"Hola, {self.nombre}. Bienvenido a PropietyFinder, estoy a tus servicios."
 
         return (f"{casa}\n"
-                f"{mensaje}")
+                f"{mensaje}")"""
 
     def agregar_propiedad(self, tipo: str, ubicacion: str, dimension: str, valor: str, lavados: str = None, habitaciones: str = None, url: str = None) -> tuple[str, bool]:
 
@@ -80,7 +80,7 @@ class Cliente:
                         propiedad.lavados = lavados
                     if habitaciones is not None and habitaciones.strip() !="":
                         propiedad.habitaciones = habitaciones
-                    if url is not None and url.strip() != "" :
+                    if url is not None and url.strip() != "":
                         propiedad.url = url
 
                     return "Propiedad editada con éxito."
@@ -92,16 +92,41 @@ class Cliente:
         except Exception as e:
             return f"Error inesperado: {e}"
 
+    def eliminar_propiedad(self, id_str: str) -> str:
+        try:
+            if not id_str.strip():
+                raise ValueError("Debe ingresar el ID de la propiedad que desea eliminar.")
+            id = int(id_str)
+
+            for propiedad in self.propiedades_cliente:
+                if propiedad.id == id:
+                    del self.propiedades_cliente[id]
+                    return "Propiedad eliminada con éxito"
+            raise ValueError("El ID dado no existe en las propiedades del cliente.")
+
+        except ValueError as ve:
+            return str(ve)
+        except Exception as e:
+            return f"Error inesperado: {e}"
+
+
     def mostrar_propiedades_cliente(self) -> tuple[str, list[Propiedad]]:
         propiedades_cliente_str = ""
-        for idx, propiedad in enumerate(self.propiedades_cliente, start=1):
-            propiedades_cliente_str += f"Propiedad {propiedad.id}:\n"
-            propiedades_cliente_str += f"Tipo: {propiedad.tipo if hasattr(propiedad, 'tipo') else 'No disponible'}\n"
-            propiedades_cliente_str += f"Ubicación: {propiedad.ubicacion if hasattr(propiedad, 'ubicacion') else 'No disponible'}\n"
-            propiedades_cliente_str += f"Valor: {propiedad.valor if hasattr(propiedad, 'valor') else 'No disponible'}\n"
-            propiedades_cliente_str += f"Habitaciones: {propiedad.habitaciones if hasattr(propiedad, 'habitaciones') else 'No disponible'}\n"
-            propiedades_cliente_str += f"Lavados: {propiedad.lavados if hasattr(propiedad, 'lavados') else 'No disponible'}\n"
-            propiedades_cliente_str += f"Dimensión: {propiedad.dimension if hasattr(propiedad, 'dimension') else 'No disponible'}\n"
-            propiedades_cliente_str += f"URL: {propiedad.url if hasattr(propiedad, 'url') else 'No disponible'}\n\n"
+        try:
+            if not self.propiedades_cliente:
+                raise ValueError("No hay propiedades agregadas para mostrar")
+
+            """for idx, propiedad in enumerate(self.propiedades_cliente, start=1):
+                propiedades_cliente_str += f"Propiedad {propiedad.id}:\n"
+                propiedades_cliente_str += f"Tipo: {propiedad.tipo if hasattr(propiedad, 'tipo') else 'No disponible'}\n"
+                propiedades_cliente_str += f"Ubicación: {propiedad.ubicacion if hasattr(propiedad, 'ubicacion') else 'No disponible'}\n"
+                propiedades_cliente_str += f"Valor: {propiedad.valor if hasattr(propiedad, 'valor') else 'No disponible'}\n"
+                propiedades_cliente_str += f"Habitaciones: {propiedad.habitaciones if hasattr(propiedad, 'habitaciones') else 'No disponible'}\n"
+                propiedades_cliente_str += f"Lavados: {propiedad.lavados if hasattr(propiedad, 'lavados') else 'No disponible'}\n"
+                propiedades_cliente_str += f"Dimensión: {propiedad.dimension if hasattr(propiedad, 'dimension') else 'No disponible'}\n"
+                propiedades_cliente_str += f"URL: {propiedad.url if hasattr(propiedad, 'url') else 'No disponible'}\n\n"""
+        except ValueError as e:
+            return str(e), []
+
         return propiedades_cliente_str, self.propiedades_cliente
 

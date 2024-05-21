@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'agenteInmobiliariomxHFwH.ui'
+## Form generated from reading UI file 'agenteInmobiliarioTxHWiv.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.3
 ##
@@ -16,9 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QGridLayout,
-                               QHBoxLayout, QHeaderView, QLabel, QLineEdit,
-                               QPushButton, QSizePolicy, QSpacerItem, QSplitter,
-                               QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QAbstractItemView)
+    QHBoxLayout, QHeaderView, QLabel, QLineEdit,
+    QPushButton, QSizePolicy, QSpacerItem, QSplitter,
+    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -151,7 +151,7 @@ class Ui_Dialog(object):
 "QPushButton:hover{\n"
 "background-color:black;\n"
 "}\n"
-"QPushButton::icon { margin-left: 20px; }")
+"")
         self.frame_menu.setFrameShape(QFrame.StyledPanel)
         self.frame_menu.setFrameShadow(QFrame.Raised)
         self.verticalLayout_5 = QVBoxLayout(self.frame_menu)
@@ -229,6 +229,15 @@ class Ui_Dialog(object):
         self.btn_editar.setIconSize(QSize(30, 30))
 
         self.verticalLayout_5.addWidget(self.btn_editar)
+
+        self.btn_eliminar = QPushButton(self.frame_menu)
+        self.btn_eliminar.setObjectName(u"btn_eliminar")
+        icon11 = QIcon()
+        icon11.addFile(u"./img/eliminar.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_eliminar.setIcon(icon11)
+        self.btn_eliminar.setIconSize(QSize(32, 32))
+
+        self.verticalLayout_5.addWidget(self.btn_eliminar)
 
 
         self.horizontalLayout_3.addWidget(self.frame_menu)
@@ -475,8 +484,7 @@ class Ui_Dialog(object):
         __qtablewidgetitem7 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(7, __qtablewidgetitem7)
         self.tableWidget.setObjectName(u"tableWidget")
-        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
         self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 1)
 
 
@@ -521,6 +529,7 @@ class Ui_Dialog(object):
         self.btn_vender.setText(QCoreApplication.translate("Dialog", u"VENDER", None))
         self.btn_visualizar.setText(QCoreApplication.translate("Dialog", u"VER", None))
         self.btn_editar.setText(QCoreApplication.translate("Dialog", u"EDITAR", None))
+        self.btn_eliminar.setText(QCoreApplication.translate("Dialog", u"ELIMINAR", None))
         self.label_titulo.setText(QCoreApplication.translate("Dialog", u"PROPIEDADES", None))
 #if QT_CONFIG(tooltip)
         self.label_2.setToolTip(QCoreApplication.translate("Dialog", u"<html><head/><body><p>este valor es obligatorio para su llenado</p></body></html>", None))
