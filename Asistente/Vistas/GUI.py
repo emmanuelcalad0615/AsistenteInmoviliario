@@ -484,6 +484,9 @@ class Ui_Dialog(object):
         __qtablewidgetitem7 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(7, __qtablewidgetitem7)
         self.tableWidget.setObjectName(u"tableWidget")
+        self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tableWidget.setSelectionBehavior(QTableWidget.SelectRows)
 
         self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 1)
 

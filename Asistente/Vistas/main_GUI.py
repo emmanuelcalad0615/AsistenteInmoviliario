@@ -27,16 +27,16 @@ class MainWindow(QDialog):
         self.ui.btn_minimizar.clicked.connect(self.control_btn_minimizar)
         self.ui.btn_restaurar.clicked.connect(self.control_btn_restaurar)
         self.ui.btn_maximizar.clicked.connect(self.control_btn_maximizar)
-        self.ui.pushButton.clicked.connect(self.mover_menu)
+        #self.ui.pushButton.clicked.connect(self.mover_menu)
         self.ui.btn_limpiar.clicked.connect(self.control_btn_limpiar)
         self.ui.btn_mostrarCatalogo.clicked.connect(self.llenar_tabla)
-        self.ui.btn_agregar.clicked.connect(self.agregar)
+        self.ui.btn_agregar.clicked.connect(self.control_btn_agregar)
         self.ui.tableWidget.cellClicked.connect(self.openUrl)
-        self.ui.btn_buscar.clicked.connect(self.buscar)
-        self.ui.btn_visualizar.clicked.connect(self.visualizar)
-        self.ui.btn_vender.clicked.connect(self.poner_venta)
-        self.ui.btn_editar.clicked.connect(self.editar)
-        self.ui.btn_eliminar.clicked.connect(self.eliminar)
+        self.ui.btn_buscar.clicked.connect(self.control_btn_buscar)
+        self.ui.btn_visualizar.clicked.connect(self.control_btn_visualizar)
+        self.ui.btn_vender.clicked.connect(self.control_btn_poner_venta)
+        self.ui.btn_editar.clicked.connect(self.control_btn_editar)
+        self.ui.btn_eliminar.clicked.connect(self.control_btn_editar)
 
     def control_btn_minimizar(self):
         self.showMinimized()
@@ -104,7 +104,7 @@ class MainWindow(QDialog):
         if url.isValid():
             QDesktopServices.openUrl(url)
 
-    def agregar(self):
+    def control_btn_agregar(self):
         self.ui.tableWidget.clearContents()
         self.ui.tableWidget.setRowCount(0)
         id = len(self.cliente.propiedades_cliente)
@@ -140,7 +140,7 @@ class MainWindow(QDialog):
 
 
 
-    def buscar(self):
+    def control_btn_buscar(self):
         self.ui.tableWidget.clearContents()
         self.ui.tableWidget.setRowCount(0)
         dict = {
@@ -177,7 +177,7 @@ class MainWindow(QDialog):
         self.ui.lbl_msj.setText("Propiedades encontradas: {}".format(i))
         self.control_btn_limpiar()
 
-    def poner_venta(self):
+    def control_btn_poner_venta(self):
         self.ui.tableWidget.clearContents()
         self.ui.tableWidget.setRowCount(0)
         id = self.ui.lineEdit_id.text().upper()
@@ -195,7 +195,7 @@ class MainWindow(QDialog):
 
         self.ui.lbl_msj.setText(msj)
         self.control_btn_limpiar()
-    def visualizar(self):
+    def control_btn_visualizar(self):
         e, lista = self.cliente.mostrar_propiedades_cliente()
         i = len(lista)
         self.ui.tableWidget.setRowCount(i)
@@ -211,7 +211,7 @@ class MainWindow(QDialog):
             self.ui.tableWidget.setItem(row, 7, QTableWidgetItem(str(propiedad.url)))
         self.ui.lbl_msj.setText(e)
 
-    def editar(self):
+    def control_btn_editar(self):
         tipo = self.ui.lineEdit_tipo.text().upper()
         ubicacion =  self.ui.lineEdit_ubi.text().upper()
         valor = self.ui.lineEdit_valor.text().upper()
@@ -226,11 +226,11 @@ class MainWindow(QDialog):
         self.ui.lbl_msj.setText(msj)
         self.control_btn_limpiar()
 
-    def eliminar(self):
+    def control_btn_eliminar(self):
         self.ui.tableWidget.clearContents()
         self.ui.tableWidget.setRowCount(0)
         id_str = self.ui.lineEdit_id.text().upper()
-        msj = self.cliente.eliminar_propiedad(id_str)
-        self.ui.lbl_msj.setText(msj)
+        msj_e = self.cliente.eliminar_propiedad(id_str)
+        self.ui.lbl_msj.setText(msj_e)
         self.control_btn_limpiar()
 
